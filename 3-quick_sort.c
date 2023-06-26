@@ -23,7 +23,7 @@ void swap(int *a, int *b)
  *
  * Return: The index of the pivot element.
  */
-int partition(int *array, int low, int high)
+int partition(int *array, int low, int high,size_t size)
 {
 	int pivot = array[high];
 	int i = low - 1;
@@ -35,9 +35,11 @@ int partition(int *array, int low, int high)
 		{
 			i++;
 			swap(&array[i], &array[j]);
+			/*print_array(array, size);*/
 		}
 	}
 	swap(&array[i + 1], &array[high]);
+	print_array(array, size);
 	return (i + 1);
 }
 
@@ -47,13 +49,13 @@ int partition(int *array, int low, int high)
  * @low: Starting index of the partition.
  * @high: Ending index of the partition.
  */
-void quick_sort_recursive(int *array, int low, int high)
+void quick_sort_recursive(int *array, int low, int high,size_t size)
 {
 	/*int i;*/
 
 	if (low < high)
 	{
-		int pivot = partition(array, low, high);
+		int pivot = partition(array, low, high, size);
 
 		/*printf("\n");
 		for (i = low; i <= high; i++)
@@ -63,8 +65,8 @@ void quick_sort_recursive(int *array, int low, int high)
 				printf(", ");
 		}*/
 
-		quick_sort_recursive(array, low, pivot - 1);
-		quick_sort_recursive(array, pivot + 1, high);
+		quick_sort_recursive(array, low, pivot - 1, size);
+		quick_sort_recursive(array, pivot + 1, high, size);
 	}
 }
 
@@ -78,5 +80,5 @@ void quick_sort(int *array, size_t size)
 	if (array == NULL || size < 2)
 		return;
 
-	quick_sort_recursive(array, 0, size - 1);
+	quick_sort_recursive(array, 0, size - 1, size);
 }
